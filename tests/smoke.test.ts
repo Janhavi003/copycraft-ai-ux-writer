@@ -1,0 +1,2 @@
+import {describe,expect,it} from 'vitest'; import {analysisSchema,generateInputSchema} from '@/lib/schemas';
+describe('CopyCraft validation',()=>{it('accepts a valid analysis',()=>expect(analysisSchema.safeParse({clarity:90,accessibility:90,tone:90,conciseness:90,confidence:90,strengths:[],improvements:[]}).success).toBe(true));it('rejects empty generation context',()=>expect(generateInputSchema.safeParse({component:'Button',product:'A',goal:'',action:'click',audience:'General',tone:'Friendly'}).success).toBe(false))});

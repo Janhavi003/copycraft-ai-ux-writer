@@ -1,0 +1,5 @@
+import type {GenerateInput} from './types';
+export type {GenerateInput} from './types';
+export function buildGeneratePrompt(i:GenerateInput){return `Create UX copy for a ${i.component} in ${i.product}. Goal: ${i.goal}. User action: ${i.action}. Audience: ${i.audience}. Tone: ${i.tone}. Context: ${i.context||'None'}. Brand voice: ${JSON.stringify(i.brandVoice||{})}. Return JSON with headline, body, primary_action, secondary_action, supporting_text, alternatives (three objects label/copy/score/reason), and analysis (clarity/accessibility/tone/conciseness/confidence 0-100 plus strengths and improvements).`}
+export function buildAnalyzePrompt(copy:string,context:string=''){return `Analyze this UX copy: ${copy}. Context: ${context}. Return JSON analysis with clarity/accessibility/tone/conciseness/confidence, strengths, improvements.`}
+export function buildImprovePrompt(copy:string,instruction:string,context:string=''){return `Improve this UX copy: ${copy}. Instruction: ${instruction}. Context: ${context}. Return the full structured JSON response with analysis and three alternatives.`}
