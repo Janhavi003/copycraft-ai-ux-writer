@@ -4,10 +4,17 @@ import { analyze } from '@/lib/ai/provider';
 
 export async function POST(req: Request) {
   try {
-    const { text, context } = analyzeInputSchema.parse(await req.json());
+    const body = await req.json();
+    const { text, context } = analyzeInputSchema.parse(body);
     const result = await analyze(text, context);
-    return NextResponse.json({ analysis: result.value, demo: result.demo, fallbackReason: result.fallbackReason ?? null });
+    return NextResponse.json({
+      analysis: result.value,
+      demo: result.demo,
+      fallbackReason: result.fallbackReason ?? null,
+      userNotice: result.userNotice ?? null,
+    });
   } catch (e) {
-    return NextResponse.json({ message: e instanceof Error ? e.message : 'Invalid request' }, { status: 400 });
+    const msg = e instanceof Error ? e.message : 'Invalid request payload';
+    return NextResponse.json({ message: msg }, { status: 400 });
   }
 }
